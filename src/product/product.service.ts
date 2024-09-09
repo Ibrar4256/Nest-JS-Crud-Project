@@ -20,7 +20,8 @@ export class ProductService {
       throw new InternalServerErrorException('Failed to create the product');
     }
   }
-  getProducts(
+
+  async getProducts(
     filterDto: GetProductsFilterDTO,
     user: User,
     categoryId?: string,
@@ -51,7 +52,7 @@ export class ProductService {
       const product = await this.productsRepository.delete({ id, user });
 
       if (product.affected === 0) {
-        //when delete is used rows no. of rows affected is returned
+        //when delete is used no. of rows affected is returned
         throw new NotFoundException();
       }
     } catch (error) {

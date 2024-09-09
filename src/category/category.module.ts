@@ -7,13 +7,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from 'src/auth/auth.module';
 
 @Module({
-
-  imports: [
-    TypeOrmModule.forFeature([Category]),
-    AuthModule
-  ],
+  imports: [TypeOrmModule.forFeature([Category]), AuthModule],
 
   providers: [CategoryService, CategoryRepository],
-  controllers: [CategoryController]
+  controllers: [CategoryController],
 })
 export class CategoryModule {}

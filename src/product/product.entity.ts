@@ -5,7 +5,6 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
-  ObjectId,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Exclude } from 'class-transformer';
@@ -39,7 +38,7 @@ export class Product {
   category: Category;
 
   @ManyToOne((_type) => User, (user) => user.product, { eager: false })
-  @JoinColumn({ name: 'userId' }) // Explicitly link the foreign key
+  // @JoinColumn({ name: 'userId' }) // Explicitly link the foreign key
   @Exclude({ toPlainOnly: true })
   user: User;
 }
