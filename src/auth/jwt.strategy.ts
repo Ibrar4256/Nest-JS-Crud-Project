@@ -13,7 +13,7 @@ export class JwtStrategy extends PassportStrategy(Strategy){
         private userRepository: UsersRepository,
     ){
         super({
-            secretOrKey: 'topSecret51',
+            secretOrKey: process.env.secret_Key,
             jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
         });
     }
