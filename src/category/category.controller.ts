@@ -8,6 +8,7 @@ import {
   Param,
   Patch,
   Query,
+  InternalServerErrorException,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { CategoryService } from './category.service';
@@ -22,6 +23,10 @@ export class CategoryController {
 
   @Post()
   createCategory(@Body() categoryDTO: CategoryDTO): Promise<Category> {
-    return this.categoryService.createCategory(categoryDTO);
+    try {
+      return this.categoryService.createCategory(categoryDTO);
+    } catch (error) {
+      throw new InternalServerErrorException('Failed to create category');
+    }
   }
 }
