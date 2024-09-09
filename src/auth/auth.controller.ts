@@ -15,7 +15,7 @@ export class AuthController {
     try {
       return this.authService.signUp(authCredentialsDTO);
     } catch (error) {
-      throw new InternalServerErrorException('Failed to update product');
+      throw new InternalServerErrorException('Failed to SIgn UP');
     }
   }
 
@@ -26,7 +26,7 @@ export class AuthController {
     try {
       return this.authService.signIn(authCredentialsDTO);
     } catch (error) {
-      throw new InternalServerErrorException('Failed to update product');
+      throw new InternalServerErrorException('Failed to Sign In');
     }
   }
 }
