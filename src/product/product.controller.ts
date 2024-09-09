@@ -31,7 +31,7 @@ export class ProductController {
     return this.productService.createProduct(productDTO, user);
   }
 
-  @Get('/user')                //get products of a specific user with userId (Id stored in session is used for this fetching)
+  @Get('/user') //get products of a specific user with userId (Id stored in session is used for this fetching)
   getProductsByUser(
     @Query() filterDto: GetProductsFilterDTO,
     @GetUser() user: User,
@@ -39,12 +39,11 @@ export class ProductController {
     return this.productService.getProducts(filterDto, user, null);
   }
 
-
-  @Get('/category/:categoryId')               
+  @Get('/category/:categoryId')
   getProductsByCategory(
     @Query() filterDto: GetProductsFilterDTO,
     @GetUser() user: User,
-    @Param('categoryId') categoryId: string,           
+    @Param('categoryId') categoryId: string,
   ): Promise<Product[]> {
     return this.productService.getProducts(filterDto, user, categoryId);
   }
@@ -54,7 +53,7 @@ export class ProductController {
     @Param('id') id: string,
     @GetUser() user: User,
   ): Promise<Product> {
-    return this.productService.getProductById(id,user);
+    return this.productService.getProductById(id, user);
   }
 
   @Delete('/:id')
@@ -62,16 +61,15 @@ export class ProductController {
     @Param('id') id: string,
     @GetUser() user: User,
   ): Promise<void> {
-    return this.productService.deleteProductById(id,user);
+    return this.productService.deleteProductById(id, user);
   }
 
   @Put('/:id')
   updateProduct(
-    @Param('id') id: string, 
+    @Param('id') id: string,
     @GetUser() user: User,
-    @Body() productDTO: ProductDTO
-  ): Promise<Product>
-  {
-        return this.productService.updateProduct(id, productDTO, user);
+    @Body() productDTO: ProductDTO,
+  ): Promise<Product> {
+    return this.productService.updateProduct(id, productDTO, user);
   }
 }

@@ -1,8 +1,5 @@
 import { DataSource, Repository } from 'typeorm';
-import {
-  Injectable,
-  InternalServerErrorException,
-} from '@nestjs/common';
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { Category } from './category.entity';
 import { CategoryDTO } from './dto/create-category.dto';
 
@@ -13,17 +10,18 @@ export class CategoryRepository extends Repository<Category> {
   }
 
   async createCategory(categoryDTO: CategoryDTO): Promise<Category> {
-    const { name } = categoryDTO;
+    return await this.dataSource.transaction(async (manager) => {
+      const { name } = categoryDTO;
 
-    const category = this.create({
-      name
-    });
-    try {
-      await this.save(category);
-      return category;
-    } catch (error) 
-      {
+      const category = manager.create(Category, {
+        name,
+      });
+      try {
+        await manager.save(category);
+        return category;
+      } catch (error) {
         throw new InternalServerErrorException();
       }
-    }
+    });
   }
+}

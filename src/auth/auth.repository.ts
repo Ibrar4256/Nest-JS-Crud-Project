@@ -15,25 +15,28 @@ export class UsersRepository extends Repository<User> {
   }
 
   async createUser(authCredentialsDTO: AuthCredentialsDTO): Promise<void> {
-    const { username, password } = authCredentialsDTO;
+    return await this.dataSource.transaction(async (manager) => {
+      const { username, password } = authCredentialsDTO;
 
-    const salt  = await bcrypt.genSalt();
-    const hashedPassword = await bcrypt.hash(password, salt);
+      const salt = await bcrypt.genSalt();
+      const hashedPassword = await bcrypt.hash(password, salt);
 
+      const user = manager.create(User, {
+        username,
+        password: hashedPassword,
+      });
 
-    const user = this.create({
-      username,
-      password: hashedPassword,
-    });
-
-    try {
-      await this.save(user);
-    } catch (error) {
-      if (error.code === '23505') {
-        throw new ConflictException('Username already exists');
-      } else {
-        throw new InternalServerErrorException();
+      try {
+        // Attempt to save the new user within the transaction
+        await manager.save(user);
+      } catch (error) {
+        if (error.code === '23505') {
+          // Handle duplicate username error
+          throw new ConflictException('Username already exists');
+        } else {
+          throw new InternalServerErrorException();
+        }
       }
-    }
+    });
   }
 }
