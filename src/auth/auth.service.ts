@@ -25,7 +25,9 @@ export class AuthService {
       if (error instanceof ConflictException) {
         throw error;
       }
-      throw new InternalServerErrorException('Failed to create user (services)');
+      throw new InternalServerErrorException(
+        'Failed to create user (services)',
+      );
     }
   }
 
@@ -41,7 +43,9 @@ export class AuthService {
         const accessToken: string = await this.jwtService.sign(payload);
         return { accessToken };
       } else {
-        throw new UnauthorizedException('Please check your login credentials (services)');
+        throw new UnauthorizedException(
+          'Please check your login credentials (services)',
+        );
       }
     } catch (error) {
       if (error instanceof UnauthorizedException) {
