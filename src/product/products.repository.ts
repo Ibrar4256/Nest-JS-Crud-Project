@@ -32,7 +32,7 @@ export class ProductsRepository extends Repository<Product> {
         await manager.save(product);
         return product;
       } catch (error) {
-        throw new InternalServerErrorException('Error creating product');
+        throw new InternalServerErrorException('Error creating product(Repository)');
       }
     });
   }
@@ -63,7 +63,7 @@ export class ProductsRepository extends Repository<Product> {
         const products = await query.getMany();
         return products;
       } catch (error) {
-        throw new InternalServerErrorException('Error retrieving products');
+        throw new InternalServerErrorException('Error retrieving products (Repository)');
       }
     });
   }
@@ -78,7 +78,7 @@ export class ProductsRepository extends Repository<Product> {
       const product = await manager.findOne(Product, { where: { id, user } });
 
       if (!product) {
-        throw new NotFoundException('Product not found');
+        throw new NotFoundException('Product not found (Repository)');
       }
 
       const { name, description, price, categoryId } = productDTO;
@@ -91,7 +91,7 @@ export class ProductsRepository extends Repository<Product> {
         await manager.save(product);
         return product;
       } catch (error) {
-        throw new InternalServerErrorException('Error updating product');
+        throw new InternalServerErrorException('Error updating product (Repository)');
       }
     });
   }

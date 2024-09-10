@@ -29,11 +29,11 @@ export class ProductController {
     @Body() productDTO: ProductDTO,
     @GetUser() user: User,
   ): Promise<Product> {
-    try {
-      return this.productService.createProduct(productDTO, user);
-    } catch (error) {
-      throw new InternalServerErrorException('Failed to create product');
-    }
+    // try {
+    return this.productService.createProduct(productDTO, user);
+    // } catch (error) {
+    //   throw new InternalServerErrorException('Failed to create product (Controller)');
+    // }
   }
 
   @Get('/user') //get products of a specific user with userId (Id stored in session is used for this fetching)
@@ -41,11 +41,11 @@ export class ProductController {
     @Query() filterDto: GetProductsFilterDTO,
     @GetUser() user: User,
   ): Promise<Product[]> {
-    try {
-      return this.productService.getProducts(filterDto, user, null);
-    } catch (error) {
-      throw new InternalServerErrorException('Failed to fetch products');
-    }
+    // try {
+    return this.productService.getProducts(filterDto, user, null);
+    // } catch (error) {
+    //   throw new InternalServerErrorException('Failed to fetch products (Controller)');
+    // }
   }
 
   @Get('/category/:categoryId')
@@ -54,11 +54,11 @@ export class ProductController {
     @GetUser() user: User,
     @Param('categoryId') categoryId: string,
   ): Promise<Product[]> {
-    try {
-      return this.productService.getProducts(filterDto, user, categoryId);
-    } catch (error) {
-      throw new InternalServerErrorException('Failed to fetch products');
-    }
+    // try {
+    return this.productService.getProducts(filterDto, user, categoryId);
+    // } catch (error) {
+    //   throw new InternalServerErrorException('Failed to fetch products (Controller)');
+    // }
   }
 
   @Get('/:id')
@@ -66,11 +66,11 @@ export class ProductController {
     @Param('id') id: string,
     @GetUser() user: User,
   ): Promise<Product> {
-    try {
-      return this.productService.getProductById(id, user);
-    } catch (error) {
-      throw new InternalServerErrorException('Failed to fetch product');
-    }
+    // try {
+    return this.productService.getProductById(id, user);
+    // } catch (error) {
+    //   throw new InternalServerErrorException('Failed to fetch product (Controller)');
+    // }
   }
 
   @Delete('/:id')
@@ -78,11 +78,11 @@ export class ProductController {
     @Param('id') id: string,
     @GetUser() user: User,
   ): Promise<void> {
-    try {
-      return this.productService.deleteProductById(id, user);
-    } catch (error) {
-      throw new InternalServerErrorException('Failed to delete product');
-    }
+    // try {
+    return this.productService.deleteProductById(id, user);
+    // } catch (error) {
+    //   throw new InternalServerErrorException('Failed to delete product (Controller)');
+    // }
   }
 
   @Put('/:id')
@@ -91,10 +91,10 @@ export class ProductController {
     @GetUser() user: User,
     @Body() productDTO: ProductDTO,
   ): Promise<Product> {
-    try {
-      return this.productService.updateProduct(id, productDTO, user);
-    } catch (error) {
-      throw new InternalServerErrorException('Failed to update product');
-    }
+    // try {
+    return this.productService.updateProduct(id, productDTO, user);
+    // } catch (error) {
+    //   throw new InternalServerErrorException('Failed to update product (Controller)');
+    // }
   }
 }

@@ -17,7 +17,7 @@ export class ProductService {
     try {
       return this.productsRepository.createProduct(productDTO, user);
     } catch (error) {
-      throw new InternalServerErrorException('Failed to create the product');
+      throw new InternalServerErrorException('Failed to create the product (services)');
     }
   }
 
@@ -29,7 +29,7 @@ export class ProductService {
     try {
       return this.productsRepository.getProducts(filterDto, user, categoryId);
     } catch (error) {
-      throw new InternalServerErrorException('Failed to fetch product(s)');
+      throw new InternalServerErrorException('Failed to fetch product(s) (services)');
     }
   }
 
@@ -43,7 +43,7 @@ export class ProductService {
       }
       return product;
     } catch (error) {
-      throw new InternalServerErrorException('Failed to fetch the product');
+      throw new InternalServerErrorException('Failed to fetch the product (services)');
     }
   }
 
@@ -56,7 +56,7 @@ export class ProductService {
         throw new NotFoundException();
       }
     } catch (error) {
-      throw new InternalServerErrorException('Failed to delete product');
+      throw new InternalServerErrorException('Failed to delete product (services)');
     }
   }
 
@@ -71,7 +71,7 @@ export class ProductService {
       if (error instanceof NotFoundException) {
         throw error; // Rethrow NotFoundException if it's raised by the repository
       }
-      throw new InternalServerErrorException('Failed to update product');
+      throw new InternalServerErrorException('Failed to update product (services)');
     }
   }
 }
