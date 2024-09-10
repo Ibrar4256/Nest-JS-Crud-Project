@@ -17,7 +17,9 @@ export class ProductService {
     try {
       return this.productsRepository.createProduct(productDTO, user);
     } catch (error) {
-      throw new InternalServerErrorException('Failed to create the product (services)');
+      throw new InternalServerErrorException(
+        'Failed to create the product (services)',
+      );
     }
   }
 
@@ -29,7 +31,9 @@ export class ProductService {
     try {
       return this.productsRepository.getProducts(filterDto, user, categoryId);
     } catch (error) {
-      throw new InternalServerErrorException('Failed to fetch product(s) (services)');
+      throw new InternalServerErrorException(
+        'Failed to fetch product(s) (services)',
+      );
     }
   }
 
@@ -39,11 +43,16 @@ export class ProductService {
         where: { id, user },
       });
       if (!product) {
-        throw new NotFoundException();
+        throw new NotFoundException('Product Not Found');
       }
       return product;
     } catch (error) {
-      throw new InternalServerErrorException('Failed to fetch the product (services)');
+      if (error instanceof NotFoundException) {
+        throw error;
+      }
+      throw new InternalServerErrorException(
+        'Failed to fetch the product (services)',
+      );
     }
   }
 
@@ -53,10 +62,15 @@ export class ProductService {
 
       if (product.affected === 0) {
         //when delete is used no. of rows affected is returned
-        throw new NotFoundException();
+        throw new NotFoundException('Product Not Found');
       }
     } catch (error) {
-      throw new InternalServerErrorException('Failed to delete product (services)');
+      if (error instanceof NotFoundException) {
+        throw error;
+      }
+      throw new InternalServerErrorException(
+        'Failed to delete product (services)',
+      );
     }
   }
 
@@ -71,7 +85,9 @@ export class ProductService {
       if (error instanceof NotFoundException) {
         throw error; // Rethrow NotFoundException if it's raised by the repository
       }
-      throw new InternalServerErrorException('Failed to update product (services)');
+      throw new InternalServerErrorException(
+        'Failed to update product (services)',
+      );
     }
   }
 }

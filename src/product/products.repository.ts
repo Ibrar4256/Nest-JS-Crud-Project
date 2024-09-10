@@ -32,7 +32,9 @@ export class ProductsRepository extends Repository<Product> {
         await manager.save(product);
         return product;
       } catch (error) {
-        throw new InternalServerErrorException('Error creating product(Repository)');
+        throw new InternalServerErrorException(
+          'Error creating product(Repository)',
+        );
       }
     });
   }
@@ -43,29 +45,29 @@ export class ProductsRepository extends Repository<Product> {
     user: User,
     categoryId?: string, // A required parameter can not follow an optional parameter(that's why categoryId is last)
   ): Promise<Product[]> {
-    return await this.dataSource.transaction(async (manager) => {
-      const { search } = filterDto;
-      const query = manager.createQueryBuilder(Product, 'product');
-      query.where({ user });
+    const { search } = filterDto;
+    const query = this.dataSource.createQueryBuilder(Product, 'product');
+    query.where({ user });
 
-      if (categoryId) {
-        query.andWhere('product.categoryId = :categoryId', { categoryId });
-      }
+    if (categoryId) {
+      query.andWhere('product.categoryId = :categoryId', { categoryId });
+    }
 
-      if (search) {
-        query.andWhere(
-          '(LOWER(product.name) LIKE LOWER(:search) OR LOWER(product.description) LIKE LOWER(:search))',
-          { search: `%${search}%` },
-        );
-      }
+    if (search) {
+      query.andWhere(
+        '(LOWER(product.name) LIKE LOWER(:search) OR LOWER(product.description) LIKE LOWER(:search))',
+        { search: `%${search}%` },
+      );
+    }
 
-      try {
-        const products = await query.getMany();
-        return products;
-      } catch (error) {
-        throw new InternalServerErrorException('Error retrieving products (Repository)');
-      }
-    });
+    try {
+      const products = await query.getMany();
+      return products;
+    } catch (error) {
+      throw new InternalServerErrorException(
+        'Error retrieving products (Repository)',
+      );
+    }
   }
 
   // Using transactions in the updateProduct method
@@ -91,7 +93,9 @@ export class ProductsRepository extends Repository<Product> {
         await manager.save(product);
         return product;
       } catch (error) {
-        throw new InternalServerErrorException('Error updating product (Repository)');
+        throw new InternalServerErrorException(
+          'Error updating product (Repository)',
+        );
       }
     });
   }
