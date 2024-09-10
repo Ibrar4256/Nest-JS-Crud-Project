@@ -2,6 +2,7 @@ import {
   Injectable,
   InternalServerErrorException,
   UnauthorizedException,
+  ConflictException,
 } from '@nestjs/common';
 import { UsersRepository } from './auth.repository';
 import { AuthCredentialsDTO } from './dto/auth-credentials.dto';
@@ -21,7 +22,10 @@ export class AuthService {
     try {
       return this.usersRepository.createUser(authCredentialsDTO);
     } catch (error) {
-      throw new InternalServerErrorException('Failed to create user');
+      if (error instanceof ConflictException) {
+        throw error;
+      }
+      throw new InternalServerErrorException('Failed to create user (services)');
     }
   }
 
@@ -37,13 +41,13 @@ export class AuthService {
         const accessToken: string = await this.jwtService.sign(payload);
         return { accessToken };
       } else {
-        throw new UnauthorizedException('Please check your login credentials');
+        throw new UnauthorizedException('Please check your login credentials (services)');
       }
     } catch (error) {
       if (error instanceof UnauthorizedException) {
         throw error;
       }
-      throw new InternalServerErrorException('Failed to sign in');
+      throw new InternalServerErrorException('Failed to sign in (services)');
     }
   }
 }

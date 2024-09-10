@@ -12,7 +12,7 @@ export class CategoryService {
     try {
       return this.categoryRepository.createCategory(categoryDTO);
     } catch (error) {
-      throw new InternalServerErrorException('Failed to create the product');
+      throw new InternalServerErrorException('Failed to create the category (service)');
     }
   }
 }

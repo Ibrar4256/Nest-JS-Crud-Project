@@ -20,7 +20,7 @@ export class CategoryRepository extends Repository<Category> {
         await manager.save(category);
         return category;
       } catch (error) {
-        throw new InternalServerErrorException();
+        throw new InternalServerErrorException('Failed to create category (Repository)');
       }
     });
   }

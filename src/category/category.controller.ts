@@ -23,10 +23,10 @@ export class CategoryController {
 
   @Post()
   createCategory(@Body() categoryDTO: CategoryDTO): Promise<Category> {
-    try {
+    // try {
       return this.categoryService.createCategory(categoryDTO);
-    } catch (error) {
-      throw new InternalServerErrorException('Failed to create category');
-    }
+    // } catch (error) {
+    //   throw new InternalServerErrorException('Failed to create category (Controller)');
+    // }
   }
 }
