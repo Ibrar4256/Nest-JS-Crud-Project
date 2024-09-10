@@ -12,21 +12,13 @@ export class AuthController {
 
   @Post('/signup')
   signUp(@Body() authCredentialsDTO: AuthCredentialsDTO): Promise<void> {
-    // try {
     return this.authService.signUp(authCredentialsDTO);
-    // } catch (error) {
-    //   throw new InternalServerErrorException('Failed to SIgn UP (Controller)');
-    // }
   }
 
   @Post('/signin')
   signIn(
     @Body() authCredentialsDTO: AuthCredentialsDTO,
   ): Promise<{ accessToken: string }> {
-    // try {
     return this.authService.signIn(authCredentialsDTO);
-    // } catch (error) {
-    //   throw new InternalServerErrorException('Failed to Sign In (Controller)');
-    // }
   }
 }
